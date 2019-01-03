@@ -1,0 +1,181 @@
+:root {
+    --bar-height: 48px;
+    --completed-color: rgb(55, 226, 32);
+    --animation-time: 250ms;
+}
+
+@media screen and (max-width: 600px) {
+    :root {
+        --bar-height: 24px;
+    }
+}
+
+div {
+    border: 0px solid black;
+}
+
+.container {
+    margin: 2vw;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.timer {
+    font-size: calc(4vw + 12px);
+    text-align: center;
+    margin: 10px 0px;
+}
+
+.hours::after, .minutes::after {
+    content: ":";
+    position: relative;
+    bottom: .6ch;
+    opacity: 0.5;
+    font-size: 1ch;
+    margin-left: .9ch;
+}
+
+.barContainer {
+    margin: 4vw 0px;
+}
+
+.bar {
+    height: var(--bar-height);
+    background-color: lightgray;
+    border: 1px solid darkgray;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.percent {
+    left: 0;
+    right: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    font-size: calc(var(--bar-height) / 3 * 2); 
+    margin: calc(var(--bar-height) / 8 - var(--bar-height)) 0px 0px 0px;
+    pointer-events: none;
+}
+
+.percent::before {
+    content: attr(data-percent);
+}
+
+.percent::after {
+    content: " %";
+}
+
+.barProgress {
+    position: relative;
+    background-color: var(--completed-color);
+    height: var(--bar-height);
+    width: var(--progress);
+}
+
+.moduleContainer {
+    padding: calc(1vw + 12px);
+    border: 1px solid darkgrey;
+    border-radius: 20px;
+}
+
+.moduleContainer::before {
+    content: attr(title);
+    font-size: calc(2vw + 12px);
+}
+
+.moduleContainer > ul {
+    list-style: none;
+    padding: 0;
+}
+
+.module {
+    display: block;
+    max-height: 1rem;
+    padding: 8px;
+    transition: all var(--animation-time) ease;
+    margin: 4px 0px;
+    border-radius: 2px;
+    color: white;
+    overflow: hidden;
+    background: linear-gradient(
+        to right, 
+        var(--completed-color) 0% var(--progress), 
+        lightgray var(--progress) 100%
+    );
+}
+
+.module::before {
+    content: attr(title);
+    transition: all var(--animation-time) ease;
+}
+
+.module:hover::before {
+    content: attr(title-time);
+    font-size: 2rem;
+}
+
+.module::after {
+    content: attr(data-progress);
+    opacity: 0;
+    transition: all var(--animation-time) ease;
+}
+
+.module:hover::after {
+    opacity: 1;
+}
+
+.module > * {
+    transition: all var(--animation-time) ease;
+    opacity: 0;
+}
+
+.module:hover > * {
+    opacity: 1;
+}
+
+.moduleContainer ul:hover > li:not(:hover) {
+    opacity: 0.5;
+}
+
+.module:hover {
+    max-height: 500px;
+    transition: all var(--animation-time) ease;
+}
+
+/* .subContainer {
+    display: inline-block;
+    height: var(--bar-height);
+    width: 100%;
+    margin: calc(0px - var(--bar-height)) 0px;
+}
+
+.subContainer > div {
+    position: relative;
+    float: left;
+    height: var(--bar-height);
+    width: 30%;
+}
+
+div[class^="module"] > div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+div[class^="module"]:hover div {
+    background-color: rgb(23, 118, 243);
+}
+
+div[class^="module"]:hover::after {
+    content: attr(data);
+    position: fixed;
+    margin: calc(var(--bar-height) - 5px) 0px;
+    padding: 8px;
+    background-color: rgb(23, 118, 243);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+} */
