@@ -12,7 +12,7 @@ class Meta(Resource):
 route = '/'
 app = Flask(__name__)
 api = Api(app)
-CORS(app, resources={f'{route}*': {'origins': 'http://127.0.0.1:5500'}})
+CORS(app, resources={f'{route}*': {'origins': 'http://142.93.35.88:5500'}})
 
 api.add_resource(Meta, '/')
 

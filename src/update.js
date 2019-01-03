@@ -1,4 +1,4 @@
-const url = "http://127.0.0.1:5000/today?school_id=680&elev_id=21640110194";
+const url = "http://142.93.35.88:5500/today?school_id=680&elev_id=21640110194";
 
 let n = 0;
 let modules = [];
