@@ -16,7 +16,7 @@ function httpGetAsync(url, callback) {
 }
 
 function offsetDate() {
-    let dn = offsetDate();
+    let dn = new Date();
     dn.setHours(dn.getHours() + offsetHours);
     return dn;
 }
