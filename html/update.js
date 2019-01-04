@@ -1,4 +1,5 @@
 const url = "http://142.93.35.88:5500/today?school_id=680&elev_id=21640110194";
+const offsetHours = 1;
 
 let n = 0;
 let modules = [];
@@ -12,6 +13,12 @@ function httpGetAsync(url, callback) {
     }
     xmlHttp.open("GET", url, true);
     xmlHttp.send(null);
+}
+
+function offsetDate() {
+    let dn = offsetDate();
+    dn.setHours(dn.getHours() + offsetHours);
+    return dn;
 }
 
 function calcTime(d1, d2) {
@@ -32,7 +39,7 @@ function init(resp) {
     start = new Date(today.start);
     end = new Date(today.end);
 
-    let dn = new Date();
+    let dn = offsetDate();
     modcont.setAttribute("title", "Skema: " + dn.toDateString());
 
     const amt_pieces = Object.keys(today).length - 3;
@@ -76,7 +83,7 @@ function percent(dstart, dnow, dend) {
 }
 
 function update() {
-    let dn = new Date();
+    let dn = offsetDate();
     n = percent(start, dn, end);
 
     let hms = calcTime(dn, end);
