@@ -77,11 +77,15 @@ class Schedule(TimePeriod):
         self.name = name
         self._pieces = list(pieces)
         self._pieces.sort()
-
-        self.start = min(self._pieces).start
-        self.end = max(self._pieces).end
-
         self.offset = offset
+
+        try:
+            self.start = min(self._pieces).start
+            self.end = max(self._pieces).end
+        except ValueError:
+            self.start = datetime.now() + self.offset
+            self.end = datetime.now() + self.offset
+
 
     def pieceNow(self) -> (DayStatus, Piece):
         return self.pieceAt(datetime.now() + self.offset)
@@ -119,8 +123,34 @@ class Schedule(TimePeriod):
         return DayStatus.BREAK
 
     def json(self):
-        json = {"name": self.name}
+        json = {
+            "name": self.name,
+            "schoolstatus": self.schoolStatus().value,
+            "start": self.start,
+            "end": self.end 
+        }
         for i, p in enumerate(self._pieces):
+            json[str(i)] = p.json()
+        return json
+
+    def jsonToday(self):
+        today = self.today()
+
+        if len(today) == 0:
+            return {
+                "start": datetime.now() + self.offset,
+                "end": datetime.now() + self.offset,
+                "name": self.name,
+                "schoolstatus": DayStatus.WEEKEND.value
+            }
+
+        json = {
+            "name": self.name,
+            "schoolstatus": self.schoolStatus().value,
+            "start": today[0].start,
+            "end": today[-1].end 
+        }
+        for i, p in enumerate(today):
             json[str(i)] = p.json()
         return json
 

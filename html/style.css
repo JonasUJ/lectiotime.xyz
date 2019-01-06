@@ -1,7 +1,8 @@
 :root {
     --bar-height: 48px;
-    --completed-color: rgb(55, 226, 32);
+    --completed-color: rgb(50, 225, 0);
     --animation-time: 250ms;
+    --skema-font-size: 32px;
 }
 
 @media screen and (max-width: 600px) {
@@ -10,14 +11,41 @@
     }
 }
 
+@media screen and (max-width: 1000px) {
+    :root {
+        --skema-font-size: calc(2vw + 12px);
+    }
+}
+
 div {
     border: 0px solid black;
 }
 
+html, body {
+    margin: 0;
+}
+
+a {
+    text-decoration-line: none;
+}
+
 .container {
-    margin: 2vw;
+    margin: 0px 2vw;
     font-size: 16px;
     font-family: 'Roboto', sans-serif;
+}
+
+.topBar {
+    padding: 4px;
+    border-bottom: 1px solid lightgray;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.help:hover::after {
+    content: url("help.png");
+    display: block;
 }
 
 .timer {
@@ -68,25 +96,31 @@ div {
 
 .barProgress {
     position: relative;
-    background-color: var(--completed-color);
+    background: rgb(
+        calc(255 - var(--percent) * 2.05 + (-1/25 * var(--percent) * var(--percent) + 4 * var(--percent))),
+        calc(var(--percent) * 2.25 + (-2/25 * var(--percent) * var(--percent) + 9 * var(--percent) - 100)),
+        0);
     height: var(--bar-height);
-    width: var(--progress);
+    width: calc(var(--progress));
 }
 
 .moduleContainer {
     padding: calc(1vw + 12px);
     border: 1px solid darkgrey;
-    border-radius: 20px;
+    border-radius: 10px;
+    max-width: 1000px;
+    margin: auto;
 }
 
 .moduleContainer::before {
-    content: attr(title);
-    font-size: calc(2vw + 12px);
+    content: attr(data-title);
+    font-size: var(--skema-font-size);
 }
 
 .moduleContainer > ul {
     list-style: none;
     padding: 0;
+    margin-bottom: 0;
 }
 
 .module {
@@ -106,12 +140,14 @@ div {
 }
 
 .module::before {
-    content: attr(title);
+    content: attr(data-title);
+    white-space: nowrap;
     transition: all var(--animation-time) ease;
 }
 
 .module:hover::before {
-    content: attr(title-time);
+    content: attr(data-title-time);
+    white-space: normal;
     font-size: 2rem;
 }
 

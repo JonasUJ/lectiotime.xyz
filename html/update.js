@@ -1,23 +1,26 @@
-const url = "http://142.93.35.88:5500/today?school_id=680&elev_id=21640110194";
-const offsetHours = 1;
-
-let n = 0;
+let localStorage = window.localStorage;
+let offsetMinutes = 0;
+let offsetHours = 0;
+let offsetDays = 0;
+let n = 0; 
 let modules = [];
-let loop, par, bar, ulmod, modcont, hours, minutes, seconds, start, end;
+let loop, par, bar, barpro, ulmod, modcont, hours, minutes, seconds, start, end;
 
-function httpGetAsync(url, callback) {
+function httpGetAsync(callback) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             callback(xmlHttp.responseText);
     }
-    xmlHttp.open("GET", url, true);
+    xmlHttp.open("GET", `http://142.93.35.88:5500/today?school_id=${localStorage.getItem("schoolid")}&elev_id=${localStorage.getItem("studentid")}`, true);
     xmlHttp.send(null);
 }
 
 function offsetDate() {
     let dn = new Date();
     dn.setHours(dn.getHours() + offsetHours);
+    dn.setDate(dn.getDate() + offsetDays);
+    dn.setMinutes(dn.getMinutes() + offsetMinutes);
     return dn;
 }
 
@@ -26,12 +29,16 @@ function calcTime(d1, d2) {
     let h = Math.floor(diff / (1000 * 60 * 60));
     let m = Math.floor(diff / (1000 * 60)) - h * 60;
     let s = Math.floor(diff / 1000) - m * 60 - h * 60 * 60;
-    return [h, m, s];
+    return diff > 0 ? [h, m, s] : [0, 0, 0];
 }
 
 function calcTimeStr(d1, d2) {
     let times = calcTime(d1, d2);
     return `${times[0]}:${("0" + times[1]).substr(-2, 2)}:${("0" + times[2]).substr(-2, 2)}`;
+}
+
+function setTitle(per, dn) {
+    document.title = `${per}% ${calcTimeStr(dn, end)}`;
 }
 
 function init(resp) {
@@ -40,15 +47,19 @@ function init(resp) {
     end = new Date(today.end);
 
     let dn = offsetDate();
-    modcont.setAttribute("title", "Skema: " + dn.toDateString());
+    modcont.setAttribute("data-title", "Skema: " + dn.toDateString());
 
-    const amt_pieces = Object.keys(today).length - 3;
+    while (ulmod.firstChild) {
+        ulmod.removeChild(ulmod.firstChild);
+    }
+
+    const amt_pieces = Object.keys(today).length - 4;
     for (let i = 0; i < amt_pieces; i++) {
         let mod = document.createElement("li");
         mod.className = "module";
         mod.style = "--progress: 0%"
-        mod.setAttribute("title", today[i].Hold);
-        mod.setAttribute("title-time", today[i].Hold + " " + calcTimeStr(dn, end));
+        mod.setAttribute("data-title", today[i].Hold);
+        mod.setAttribute("data-title-time", today[i].Hold + " " + calcTimeStr(dn, end));
         mod.setAttribute("data-progress", "0%");
         mod.start = new Date(today[i].start);
         mod.end = new Date(today[i].end);
@@ -101,16 +112,19 @@ function update() {
         mn = Math.floor(mn * 10) / 10
         modul.style = `--progress: ${mn >= 0 ? mn : 0}%`
         modul.setAttribute("data-progress", mn + "%");
-        modul.setAttribute("title-time", modul.title + " " + (modul.end - dn >= 0 ? calcTimeStr(dn, modul.end) : "0:00:00"));
+        modul.setAttribute("data-title-time", modul.getAttribute("data-title") + " " + calcTimeStr(dn, modul.end));
     })
 
     n = Math.floor(n * 10) / 10
     bar.style = "--progress: " + n + "%"
     par.setAttribute("data-percent", n);
+    barpro.style = `--percent: ${n}`;
+    setTitle(n, dn);
 }
 
 function onload() {
     bar = document.getElementsByClassName("bar")[0];
+    barpro = document.getElementsByClassName("barProgress")[0];
     par = document.getElementsByClassName("percent")[0];
     ulmod = document.getElementsByTagName("ul")[0];
     modcont = document.getElementsByClassName("moduleContainer")[0];
@@ -118,7 +132,10 @@ function onload() {
     minutes = document.getElementsByClassName("minutes")[0];
     seconds = document.getElementsByClassName("seconds")[0];
 
-    httpGetAsync(url, init)
+    httpGetAsync(init)
 }
 
-window.addEventListener("load", onload);
+function onchangeInput(inp) {
+    localStorage.setItem(inp.name, inp.value)
+    httpGetAsync(init)
+}
