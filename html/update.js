@@ -131,7 +131,7 @@ function onload() {
     hours = document.getElementsByClassName("hours")[0];
     minutes = document.getElementsByClassName("minutes")[0];
     seconds = document.getElementsByClassName("seconds")[0];
-
+    
     httpGetAsync(init)
 }
 

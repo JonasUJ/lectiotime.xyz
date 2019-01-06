@@ -21,18 +21,18 @@ div {
     border: 0px solid black;
 }
 
-html, body {
+body {
     margin: 0;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
 }
 
 a {
-    text-decoration-line: none;
+    text-decoration: none;
 }
 
 .container {
     margin: 0px 2vw;
-    font-size: 16px;
-    font-family: 'Roboto', sans-serif;
 }
 
 .topBar {
@@ -52,15 +52,6 @@ a {
     font-size: calc(4vw + 12px);
     text-align: center;
     margin: 10px 0px;
-}
-
-.hours::after, .minutes::after {
-    content: ":";
-    position: relative;
-    bottom: .6ch;
-    opacity: 0.5;
-    font-size: 1ch;
-    margin-left: .9ch;
 }
 
 .barContainer {
@@ -178,40 +169,3 @@ a {
     max-height: 500px;
     transition: all var(--animation-time) ease;
 }
-
-/* .subContainer {
-    display: inline-block;
-    height: var(--bar-height);
-    width: 100%;
-    margin: calc(0px - var(--bar-height)) 0px;
-}
-
-.subContainer > div {
-    position: relative;
-    float: left;
-    height: var(--bar-height);
-    width: 30%;
-}
-
-div[class^="module"] > div {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-}
-
-div[class^="module"]:hover div {
-    background-color: rgb(23, 118, 243);
-}
-
-div[class^="module"]:hover::after {
-    content: attr(data);
-    position: fixed;
-    margin: calc(var(--bar-height) - 5px) 0px;
-    padding: 8px;
-    background-color: rgb(23, 118, 243);
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-} */
