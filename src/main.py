@@ -38,7 +38,7 @@ def today_endpoint():
     if not school_id or not (elev_id or name):
         return 'Missing either school_id, elev_id or name'
     try:
-        sched = getSchedule(elev_id, school_id, offset=timedelta(days=0, hours=-1))
+        sched = getSchedule(elev_id, school_id, offset=timedelta(days=0, hours=0))
     except Exception:
         return jsonify({"error": "error"})
 
