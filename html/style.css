@@ -36,11 +36,18 @@ a {
 }
 
 .topBar {
-    padding: 4px;
     border-bottom: 1px solid lightgray;
     top: 0;
     left: 0;
-    width: 100%;
+    width: calc(100% - 4px);
+}
+
+.topBar > * {
+    margin: 4px 0px;
+}
+
+.topBar:first-child {
+    margin-left: 4px;
 }
 
 .help:hover::after {

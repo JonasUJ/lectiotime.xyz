@@ -12,7 +12,8 @@ function httpGetAsync(callback) {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             callback(xmlHttp.responseText);
     }
-    xmlHttp.open("GET", `http://142.93.35.88:5500/today?school_id=${localStorage.getItem("schoolid")}&elev_id=${localStorage.getItem("studentid")}`, true);
+    xmlHttp.open("GET", `https://api.lectiotime.xyz/today?school_id=${localStorage.getItem("schoolid")}&elev_id=${localStorage.getItem("studentid")}`, true);
+    // xmlHttp.open("GET", `http://127.0.0.1:5000/today?school_id=${localStorage.getItem("schoolid")}&elev_id=${localStorage.getItem("studentid")}`, true);
     xmlHttp.send(null);
 }
 
