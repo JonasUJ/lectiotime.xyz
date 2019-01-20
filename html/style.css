@@ -3,6 +3,11 @@
     --completed-color: rgb(50, 225, 0);
     --animation-time: 250ms;
     --skema-font-size: 32px;
+    --mdc-theme-primary: #3f51b5;
+    --mdc-theme-secondary: #33e81c;
+    --mdc-theme-on-primary: #ffffff;
+    --mdc-theme-on-secondary: #000000;
+    --mdc-theme-background: #ffffff;
 }
 
 @media screen and (max-width: 600px) {
@@ -35,24 +40,33 @@ a {
     margin: 0px 2vw;
 }
 
-.topBar {
-    border-bottom: 1px solid lightgray;
-    top: 0;
-    left: 0;
-    width: calc(100% - 4px);
+.login-modal {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--mdc-theme-background);
 }
 
-.topBar > * {
-    margin: 4px 0px;
-}
-
-.topBar:first-child {
-    margin-left: 4px;
-}
-
-.help:hover::after {
-    content: url("help.png");
+.login-modal-container {
+    position: absolute;
     display: block;
+    margin: 0 auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+}
+
+.elevid,
+.skoleid,
+.login-modal-bottom {
+  display: block;
+  width: 300px;
+  margin: 20px auto;
+}
+
+.login-modal-bottom > * {
+    margin-left: 20px;
+    float: right; 
 }
 
 .timer {

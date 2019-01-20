@@ -9,6 +9,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Time Remaining</title>
 
+    <!-- Material -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -19,20 +24,48 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
 
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="style.css">
 
     <!-- Scripts -->
     <script src="update.js"></script>
+    <script src="mdc_init.js"></script>
 </head>
 
-<body onload="onload()">
-    <div class="topBar">
-        <input class="schoolid" name="schoolid" placeholder="Skole id" onchange="onchangeInput(this)">
-        <input class="studentid" name="studentid" placeholder="Elev id" onchange="onchangeInput(this)">
-        <a href="help.png" class="help">hjælp</a>
+<body onload="onload(); mdc_init()">
+    <div class="login-modal">
+        <div class="login-modal-container">
+            <h1>LectioTime</h1>
+            <div class="elevid mdc-text-field">
+                <input type="text" id="my-text-field" class="mdc-text-field__input">
+                <label class="mdc-floating-label" for="my-text-field">Elev id</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+            <div class="skoleid mdc-text-field">
+                <input type="text" id="my-text-field" class="mdc-text-field__input">
+                <label class="mdc-floating-label" for="my-text-field">Skole id</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+            <div class="login-modal-bottom">
+                <button class="mdc-button mdc-button--raised">
+                    <span class="mdc-button__label">Log ind</span>
+                </button>
+                <div class="mdc-form-field">
+                    <div class="mdc-checkbox">
+                        <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1" />
+                        <div class="mdc-checkbox__background">
+                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                            </svg>
+                            <div class="mdc-checkbox__mixedmark"></div>
+                        </div>
+                    </div>
+                    <label for="checkbox-1">Husk mig</label>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="container">
         <div class="timer">
