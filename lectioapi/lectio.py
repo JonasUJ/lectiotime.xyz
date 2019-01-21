@@ -75,3 +75,14 @@ def getSchedule(elev_id: str, school_id: str, offset=timedelta(0)) -> Schedule:
         soup.find("div", class_="maintitle").contents[0]).group("name")
 
     return Schedule(name, *pieces, offset=offset)
+
+def exists(elev_id: str, school_id: str) -> bool:
+    html = getHTML(URI_TEMPLATE.format(
+        school_id = school_id,
+        elev_id = elev_id,
+        week = datetime.now().strftime("%V%Y")
+    ))
+
+    soup = BeautifulSoup(html, "html.parser")
+
+    return not soup.find("title").contents[0].strip().startswith("Der opstod en fejl")
