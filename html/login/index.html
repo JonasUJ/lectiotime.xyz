@@ -10,7 +10,7 @@
 
     <!-- Material -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 
     <!-- Favicons -->
@@ -29,45 +29,75 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 
     <!-- Scripts -->
-    <script src="../mdc_init.js"></script>
-    <script src="login.js"></script>
+    <script defer src="login.js" type="module"></script>
 </head>
 
-<body onload="mdc_init(); onload()">
+<body>
     <div class="login">
+        <div role="progressbar" class="mdc-linear-progress mdc-linear-progress--closed" data-mdc-auto-init="MDCLinearProgress">
+            <div class="mdc-linear-progress__buffering-dots"></div>
+            <div class="mdc-linear-progress__buffer"></div>
+            <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+                <span class="mdc-linear-progress__bar-inner"></span>
+            </div>
+            <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+                <span class="mdc-linear-progress__bar-inner"></span>
+            </div>
+        </div>
         <div class="login-container">
             <h1 class="mdc-typography--headline2">LectioTime</h1>
-            <div class="skoleid mdc-text-field mdc-text-field--with-trailing-icon">
-                <input type="text" id="skoleid" class="mdc-text-field__input">
-                <label class="mdc-floating-label" for="my-text-field">Skole id</label>
-                <i class="material-icons mdc-text-field__icon" tabindex="0" role="button">help_outline</i>
-                <div class="mdc-line-ripple"></div>
-            </div>
-            <div class="elevid mdc-text-field mdc-text-field--with-trailing-icon">
-                <input type="text" id="elevid" class="mdc-text-field__input">
-                <label class="mdc-floating-label" for="my-text-field">Elev id</label>
-                <i class="material-icons mdc-text-field__icon" tabindex="0" role="button">help_outline</i>
-                <div class="mdc-line-ripple"></div>
-            </div>
-            <div class="login-bottom">
-                <button class="mdc-button mdc-button--raised" onclick="login()">
-                    <span class="mdc-button__label">Log ind</span>
-                </button>
-                <div class="mdc-form-field">
-                    <div class="mdc-checkbox">
-                        <input type="checkbox" class="mdc-checkbox__native-control" id="husk-mig" onchange="onchangeHuskMig()" />
-                        <div class="mdc-checkbox__background">
-                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                            </svg>
-                            <div class="mdc-checkbox__mixedmark"></div>
+            <div class="login-switch">
+                <div class="login-id">
+                    <div class="skoleid mdc-text-field mdc-text-field--with-trailing-icon" data-mdc-auto-init="MDCTextField">
+                        <input type="text" id="skoleid" class="mdc-text-field__input">
+                        <label class="mdc-floating-label" for="my-text-field">Skole id</label>
+                        <i class="material-icons mdc-text-field__icon" tabindex="0" role="button" onclick="clickHelp()">help_outline</i>
+                        <div class="mdc-line-ripple"></div>
+                    </div>
+                    <div class="elevid mdc-text-field mdc-text-field--with-trailing-icon" data-mdc-auto-init="MDCTextField">
+                        <input type="text" id="elevid" class="mdc-text-field__input">
+                        <label class="mdc-floating-label" for="my-text-field">Elev id</label>
+                        <i class="material-icons mdc-text-field__icon" tabindex="0" role="button" onclick="clickHelp()">help_outline</i>
+                        <div class="mdc-line-ripple"></div>
+                    </div>
+                    <div class="login-bottom">
+                        <button id="btn-login" class="mdc-button mdc-button--raised" data-mdc-auto-init="MDCRipple"
+                            onclick="login()">
+                            <span class="mdc-button__label">Log ind</span>
+                        </button>
+                        <div class="mdc-form-field" data-mdc-auto-init="MDCFormField">
+                            <div class="mdc-checkbox" data-mdc-auto-init="MDCCheckbox">
+                                <input type="checkbox" class="mdc-checkbox__native-control" id="husk-mig" onchange="onchangeHuskMig()" />
+                                <div class="mdc-checkbox__background">
+                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                        <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                    </svg>
+                                    <div class="mdc-checkbox__mixedmark"></div>
+                                </div>
+                            </div>
+                            <label for="checkbox-1">Husk mig</label>
                         </div>
                     </div>
-                    <label for="checkbox-1">Husk mig</label>
+                </div>
+                <div class="login-url">
+                    <i class="material-icons" role="button" onclick="clickBack()">arrow_back</i>
+                    <div class="skemaurl mdc-text-field mdc-text-field--with-trailing-icon" data-mdc-auto-init="MDCTextField">
+                        <input type="text" id="skemaurl" class="mdc-text-field__input">
+                        <label class="mdc-floating-label" for="my-text-field">Skema URL</label>
+                        <div class="mdc-line-ripple"></div>
+                    </div>
+                    <p class="mdc-text-field-helper-text" aria-hidden="true">URL til dit Lectio skema</p>
+                    <button id="btn-extract" class="mdc-button mdc-button--raised" data-mdc-auto-init="MDCRipple"
+                        onclick="extract()">
+                        <span class="mdc-button__label">Extract</span>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </body>
+<script type="text/javascript">
+    window.mdc.autoInit();
+</script>
 
 </html>
