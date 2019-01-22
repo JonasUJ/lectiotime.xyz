@@ -22,7 +22,7 @@ a {
     position: absolute;
     display: block;
     margin: 0 auto;
-    overflow: visible;
+    overflow: hidden;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -100%);
@@ -30,7 +30,7 @@ a {
 
 .login-switch {
     display: inline-flex;
-    transition: all 500ms;
+    transition: all 400ms;
 }
 
 .login-url {
@@ -38,8 +38,12 @@ a {
     position: absolute;
 }
 
+#btn-back:hover {
+    cursor: pointer;
+}
+
 #btn-extract {
-    margin-top: 0px;
+    margin-top: -5px;
     float: right;
 }
 

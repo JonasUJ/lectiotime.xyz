@@ -1,5 +1,7 @@
 import * as util from '../util.js'
 
+const re_skoleid = /lectio\/(\d+)\//;
+const re_elevid = /elevid=(\d+)/;
 let storage = window.localStorage;
 let el_elevid, el_skoleid, el_husk_mig, el_btn_login, el_progress, el_skemaurl;
 
@@ -15,8 +17,14 @@ function onload() {
     el_elevid.value = storage.getItem(el_elevid.id)
     el_skoleid.value = storage.getItem(el_skoleid.id)
     el_husk_mig.checked = storage.getItem(el_husk_mig.id) == "true" ? true : false;
-    el_elevid.focus();
-    el_skoleid.focus();
+    document.querySelector('.elevid label').classList.remove('mdc-floating-label--float-above');
+    document.querySelector('.skoleid label').classList.remove('mdc-floating-label--float-above');
+    if (el_elevid.value) {
+        document.querySelector('.elevid label').classList.add('mdc-floating-label--float-above');
+    }
+    if (el_skoleid.value) {
+        document.querySelector('.skoleid label').classList.add('mdc-floating-label--float-above');
+    }
     el_btn_login.focus();
 }
 
@@ -41,6 +49,22 @@ function onchangeHuskMig() {
     updateStorage();
 }
 
+function extract() {
+    let url = el_skemaurl.value;
+    let res_elevid = re_elevid.exec(url);
+    let res_skoleid = re_skoleid.exec(url);
+
+    if (!(res_elevid && res_skoleid)) {
+        document.querySelector('.skemaurl').MDCTextField.valid = false;
+    } else {
+        el_skoleid.value = res_skoleid[1];
+        el_elevid.value = res_elevid[1];
+        document.querySelector('.elevid label').classList.add('mdc-floating-label--float-above');
+        document.querySelector('.skoleid label').classList.add('mdc-floating-label--float-above');
+        clickBack();
+    }
+}
+
 function updateStorage() {
     if (el_husk_mig.checked) {
         storage.setItem(el_elevid.id, el_elevid.value);
@@ -60,6 +84,7 @@ function clickBack() {
     document.querySelector('.login-switch').style.transform = 'translate(0px, 0px)';
 }
 
+window.extract = extract;
 window.clickBack = clickBack;
 window.clickHelp = clickHelp;
 window.login = login;
