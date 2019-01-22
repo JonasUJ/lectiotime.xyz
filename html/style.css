@@ -1,26 +1,7 @@
 @import url("mdc_theme.css");
 
 :root {
-    --bar-height: 48px;
-    --completed-color: rgb(50, 225, 0);
     --animation-time: 250ms;
-    --skema-font-size: 32px;
-}
-
-@media screen and (max-width: 600px) {
-    :root {
-        --bar-height: 24px;
-    }
-}
-
-@media screen and (max-width: 1000px) {
-    :root {
-        --skema-font-size: calc(2vw + 12px);
-    }
-}
-
-div {
-    border: 0px solid black;
 }
 
 body {
@@ -33,128 +14,28 @@ a {
     text-decoration: none;
 }
 
-.container {
-    margin: 0px 2vw;
+.mdc-linear-progress {
+    --mdc-theme-primary: var(--mdc-theme-secondary);
 }
 
-.timer {
-    font-size: calc(4vw + 12px);
-    text-align: center;
-    margin: 10px 0px;
-}
-
-.barContainer {
-    margin: 4vw 0px;
-}
-
-.bar {
-    height: var(--bar-height);
-    background-color: lightgray;
-    border: 1px solid darkgray;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.percent {
-    left: 0;
-    right: 0;
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    font-size: calc(var(--bar-height) / 3 * 2); 
-    margin: calc(var(--bar-height) / 8 - var(--bar-height)) 0px 0px 0px;
-    pointer-events: none;
-}
-
-.percent::before {
-    content: attr(data-percent);
-}
-
-.percent::after {
-    content: " %";
-}
-
-.barProgress {
-    position: relative;
-    background: rgb(
-        calc(255 - var(--percent) * 2.05 + (-1/25 * var(--percent) * var(--percent) + 4 * var(--percent))),
-        calc(var(--percent) * 2.25 + (-2/25 * var(--percent) * var(--percent) + 9 * var(--percent) - 100)),
-        0);
-    height: var(--bar-height);
-    width: calc(var(--progress));
-}
-
-.moduleContainer {
-    padding: calc(1vw + 12px);
-    border: 1px solid darkgrey;
-    border-radius: 10px;
-    max-width: 1000px;
-    margin: auto;
-}
-
-.moduleContainer::before {
-    content: attr(data-title);
-    font-size: var(--skema-font-size);
-}
-
-.moduleContainer > ul {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 0;
-}
-
-.module {
+.topbar {
     display: block;
-    max-height: 1rem;
-    padding: 8px;
-    transition: all var(--animation-time) ease;
-    margin: 4px 0px;
-    border-radius: 2px;
-    color: white;
-    overflow: hidden;
-    background: linear-gradient(
-        to right, 
-        var(--completed-color) 0% var(--progress), 
-        lightgray var(--progress) 100%
-    );
+    margin-top: -4px;
+    width: 100%;
+    height: 64px;
+    background: var(--mdc-theme-primary);
 }
 
-.module::before {
-    content: attr(data-title);
-    white-space: nowrap;
-    transition: all var(--animation-time) ease;
+.topbar > * {
+    color: var(--mdc-theme-on-primary);
 }
 
-.module:hover::before {
-    content: attr(data-title-time);
-    white-space: normal;
-    font-size: 2rem;
+.topbar-section {
+    display: inline-flex;
+    height: 100%;
+    padding: 10px;
 }
 
-.module::after {
-    content: attr(data-progress);
-    opacity: 0;
-    transition: all var(--animation-time) ease;
-}
-
-.module:hover::after {
-    opacity: 1;
-}
-
-.module > * {
-    transition: all var(--animation-time) ease;
-    opacity: 0;
-}
-
-.module:hover > * {
-    opacity: 1;
-}
-
-.moduleContainer ul:hover > li:not(:hover) {
-    opacity: 0.5;
-}
-
-.module:hover {
-    max-height: 500px;
-    transition: all var(--animation-time) ease;
+.topbar-title {
+    margin: 5px;
 }

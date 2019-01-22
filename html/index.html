@@ -35,23 +35,45 @@
 
 <body>
     <div class="container">
-        <div class="timer">
-            <span class="hours">00</span>
-            :
-            <span class="minutes">00</span>
-            :
-            <span class="seconds">00</span>
-        </div>
-        <div class="barContainer">
-            <div class="bar" style="--progress: 0%">
-                <div class="barProgress"></div>
-                <p class="percent" data-percent="0"></p>
+        <div role="progressbar" class="mdc-linear-progress mdc-linear-progress--closed" data-mdc-auto-init="MDCLinearProgress">
+            <div class="mdc-linear-progress__buffering-dots"></div>
+            <div class="mdc-linear-progress__buffer"></div>
+            <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+                <span class="mdc-linear-progress__bar-inner"></span>
+            </div>
+            <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+                <span class="mdc-linear-progress__bar-inner"></span>
             </div>
         </div>
-        <div class="moduleContainer" data-title="Skema">
-            <ul></ul>
+        <header class="topbar">
+            <div class="topbar-section">
+                <a href="#" class="material-icons mdc-icon-button" role="button" data-mdc-auto-init="MDCRipple">arrow_back</a>
+                <h1 class="mdc-typography--headline4 topbar-title">LectioTime</span>
+            </div>
+        </header>
+        <div class="content">
+            <div class="timer">
+                <span class="hours">00</span>
+                :
+                <span class="minutes">00</span>
+                :
+                <span class="seconds">00</span>
+            </div>
+            <div class="barContainer">
+                <div class="bar" style="--progress: 0%">
+                    <div class="barProgress"></div>
+                    <p class="percent" data-percent="0"></p>
+                </div>
+            </div>
+            <div class="moduleContainer" data-title="Skema">
+                <ul></ul>
+            </div>
         </div>
     </div>
 </body>
+<script type="text/javascript">
+    window.mdc.autoInit();
+    document.querySelector(".mdc-icon-button").MDCRipple.unbounded = true;
+</script>
 
 </html>
