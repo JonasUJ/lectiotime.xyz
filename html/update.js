@@ -12,8 +12,8 @@ function httpPostAsync(callback) {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             callback(xmlHttp.responseText);
     }
-    // xmlHttp.open("POST", `https://api.lectiotime.xyz/today?schoolid=${schoolid.value}&user=${user.value}&pwd=${pwd.value}`, true);
-    xmlHttp.open("POST", `http://127.0.0.1:5000/today?schoolid=${schoolid.value}&user=${user.value}&pwd=${pwd.value}`, true);
+    xmlHttp.open("POST", `https://api.lectiotime.xyz/today?schoolid=${schoolid.value}&user=${user.value}&pwd=${pwd.value}`, true);
+    // xmlHttp.open("POST", `http://127.0.0.1:5000/today?schoolid=${schoolid.value}&user=${user.value}&pwd=${pwd.value}`, true);
     xmlHttp.send(null);
 }
 
