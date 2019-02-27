@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-def getSession(schoolid:str, user:str, pwd:str) -> requests.Session:
+def getSession(schoolid: str, user: str, pwd: str) -> requests.Session:
     '''
     Get a requests.Session logged in to lectio.dk
 
@@ -35,6 +35,7 @@ def getSession(schoolid:str, user:str, pwd:str) -> requests.Session:
     headers = {'User-agent':user_agent}
 
     s = requests.Session()
+    s.headers = headers
 
     # Get login page
     r = s.get(url)

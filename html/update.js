@@ -4,16 +4,16 @@ let offsetHours = 1;
 let offsetDays = 0;
 let n = 0; 
 let modules = [];
-let loop, par, bar, barpro, ulmod, modcont, hours, minutes, seconds, start, end;
+let loop, par, bar, barpro, ulmod, modcont, hours, minutes, seconds, start, end, schoolid, user, pwd;
 
-function httpGetAsync(callback) {
+function httpPostAsync(callback) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             callback(xmlHttp.responseText);
     }
-    xmlHttp.open("GET", `https://api.lectiotime.xyz/today?school_id=${localStorage.getItem("schoolid")}&elev_id=${localStorage.getItem("studentid")}`, true);
-    // xmlHttp.open("GET", `http://127.0.0.1:5000/today?school_id=${localStorage.getItem("schoolid")}&elev_id=${localStorage.getItem("studentid")}`, true);
+    // xmlHttp.open("POST", `https://api.lectiotime.xyz/today?schoolid=${schoolid.value}&user=${user.value}&pwd=${pwd.value}`, true);
+    xmlHttp.open("POST", `http://127.0.0.1:5000/today?schoolid=${schoolid.value}&user=${user.value}&pwd=${pwd.value}`, true);
     xmlHttp.send(null);
 }
 
@@ -132,11 +132,12 @@ function onload() {
     hours = document.getElementsByClassName("hours")[0];
     minutes = document.getElementsByClassName("minutes")[0];
     seconds = document.getElementsByClassName("seconds")[0];
-    
-    httpGetAsync(init)
+    schoolid = document.getElementsByClassName("schoolid")[0];
+    user = document.getElementsByClassName("user")[0];
+    pwd = document.getElementsByClassName("pwd")[0];
 }
 
-function onchangeInput(inp) {
-    localStorage.setItem(inp.name, inp.value)
-    httpGetAsync(init)
+function login() {
+    
+    httpPostAsync(init)
 }

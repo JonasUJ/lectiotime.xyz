@@ -4,23 +4,20 @@ from datetime import datetime, timedelta
 import requests
 from bs4 import BeautifulSoup
 from schedule import Piece, Schedule
+from lectiologin import getSession
 
-URI_TEMPLATE = "https://www.lectio.dk/lectio/{school_id}/SkemaNy.aspx?type=elev&elevid={elev_id}&week={week}"
-
-headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0"
-}
+URI_TEMPLATE = "https://www.lectio.dk/lectio/{schoolid}/SkemaNy.aspx?type=elev&elevid={elevid}&week={week}"
 
 timestamps_re = re.compile(
     r'(?P<note>[\w\d \(\)\.]*)??\n?(?P<date>\d{1,2}\/\d{1,2}-\d{4}) (?P<start>\d\d:\d\d) til (?P<end>\d\d:\d\d)', flags=re.MULTILINE | re.DOTALL)
 extra_attr_re = re.compile(r'\n(\w+): ([\w\d \(\)\.,]+)')
 name_re = re.compile(r'Eleven (?P<name>[\w ]+),.*')
+id_re = re.compile(r'elevid=(?P<id>\d+)')
 
 
-def getHTML(uri):
-    with requests.get(uri, headers=headers) as resp:
-        response = resp.text
-    return response
+def getHTML(session, uri):
+    resp = session.get(uri)
+    return resp.text
 
 
 def getDatetime(date, time) -> datetime:
@@ -52,13 +49,24 @@ def getPiece(elem) -> Piece:
     return Piece(start=start, end=end, **dict(extras))
 
 
-def getSchedule(elev_id: str, school_id: str, offset=timedelta(0)) -> Schedule:
+def getSchedule(schoolid: str, user: str, pwd: str, offset=timedelta(0)) -> Schedule:
 
-    html = getHTML(URI_TEMPLATE.format(
-        school_id = school_id,
-        elev_id = elev_id,
-        week = (datetime.now() + offset).strftime("%V%Y")
-    ))
+    session = getSession(
+        schoolid = schoolid,
+        user = user,
+        pwd = pwd
+    )
+
+    elevid = id_re.search(session.get(f'https://lectio.dk/lectio/{schoolid}/forside.aspx').text).group('id')
+
+    html = getHTML(
+        session,
+        URI_TEMPLATE.format(
+            schoolid = schoolid,
+            elevid = elevid,
+            week = (datetime.now() + offset).strftime("%V%Y")
+        )
+    )
 
     soup = BeautifulSoup(html, "html.parser")
 

@@ -16,31 +16,28 @@ CORS(app, resources={f'{route}*': {'origins': ['http://142.93.35.88', 'https://1
 
 api.add_resource(Meta, '/')
 
-@app.route(f'{route}skema')
+@app.route(f'{route}skema', methods=['GET', 'POST'])
 def skema_endpoint():
-    school_id = request.args.get('school_id', None)
-    elev_id = request.args.get('elev_id', None)
+    schoolid = request.args.get('schoolid', None)
+    user = request.args.get('user', None)
+    pwd = request.args.get('pwd', None)
 
-    if not school_id or not elev_id:
-        return 'Missing either school_id or elev_id'
+    if not schoolid or not user or not pwd:
+        return 'Missing either schoolid, user or pwd'
 
-    sched = getSchedule(elev_id, school_id)
-    print(sched.json())
+    sched = getSchedule(schoolid, user, pwd)
     return jsonify(sched.json())
 
-@app.route(f'{route}today')
+@app.route(f'{route}today', methods=['GET', 'POST'])
 def today_endpoint():
-    school_id = request.args.get('school_id', None)
-    elev_id = request.args.get('elev_id', None)
+    schoolid = request.args.get('schoolid', None)
+    user = request.args.get('user', None)
+    pwd = request.args.get('pwd', None)
 
-    if not school_id or not elev_id:
-        return 'Missing either school_id or elev_id'
+    if not schoolid or not user or not pwd:
+        return 'Missing either schoolid, user or pwd'
 
-    # try:
-    sched = getSchedule(elev_id, school_id, offset=timedelta(days=0, hours=0))
-    # except Exception:
-    #     return jsonify({"error": "error"})
-
+    sched = getSchedule(schoolid, user, pwd)
     return jsonify(sched.jsonToday())
 
 

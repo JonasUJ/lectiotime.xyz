@@ -30,9 +30,11 @@
 
 <body onload="onload()">
     <div class="topBar">
-        <input class="schoolid" name="schoolid" placeholder="Skole id" onchange="onchangeInput(this)">
-        <input class="studentid" name="studentid" placeholder="Elev id" onchange="onchangeInput(this)">
-        <a href="help.png" class="help">hjælp</a>
+        <input class="schoolid" name="schoolid" placeholder="Skole ID">
+        <input class="user" name="user" type="text" placeholder="Brugernavn">
+        <input class="pwd" name="pwd" placeholder="Kodeord" role="password" type="password">
+        <button onclick="login()">Login</button>
+        <strike><a href="help.png" class="help">hjælp</a></strike>
     </div>
     <div class="container">
         <div class="timer">
