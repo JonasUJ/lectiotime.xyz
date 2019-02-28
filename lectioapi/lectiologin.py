@@ -44,7 +44,7 @@ def getSession(schoolid: str, user: str, pwd: str) -> requests.Session:
         raise ConnectionError(f'Non 200 response code returned from {url}')
 
     # Extract all hidden input values
-    soup = BeautifulSoup(r.content, 'lxml')
+    soup = BeautifulSoup(r.content, 'html.parser')
     hidden = soup.find_all('input', {'type':'hidden'})
 
     # At the time of making this, `target` will be equal to `url`, but if lectio changes so will this
