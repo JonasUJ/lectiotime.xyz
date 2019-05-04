@@ -40,6 +40,23 @@ def today_endpoint():
     sched = getSchedule(schoolid, user, pwd)
     return jsonify(sched.jsonToday())
 
+@app.route(f'{route}start', methods=['GET', 'POST'])
+def start_endpoint():
+    schoolid = request.args.get('schoolid', None)
+    user = request.args.get('user', None)
+    pwd = request.args.get('pwd', None)
+
+    if not schoolid or not user or not pwd:
+        return 'Missing either schoolid, user or pwd'
+
+    sched = getSchedule(schoolid, user, pwd)
+    json = sched.jsonToday()
+    return f'{("0" + str(json["start"].hour))[-2:]}:{("0" + str(json["start"].minute))[-2:]}'
+
+@app.route(f'{route}curtime', methods=['GET', 'POST'])
+def curtime_endpoint():
+    dtn = datetime.now() + timedelta(hours=2)
+    return f'{dtn.hour}:{dtn.minute}'
 
 if __name__ == '__main__':
     app.run()

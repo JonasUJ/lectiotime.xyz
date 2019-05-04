@@ -1,6 +1,6 @@
 let localStorage = window.localStorage;
 let offsetMinutes = 0;
-let offsetHours = 1;
+let offsetHours = 2;
 let offsetDays = 0;
 let n = 0; 
 let modules = [];
