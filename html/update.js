@@ -2,7 +2,7 @@ let localStorage = window.localStorage;
 let offsetMinutes = 0;
 let offsetHours = 2;
 let offsetDays = 0;
-let n = 0; 
+let n = 0;
 let modules = [];
 let loop, par, bar, barpro, ulmod, modcont, hours, minutes, seconds, start, end, schoolid, user, pwd;
 
@@ -135,9 +135,13 @@ function onload() {
     schoolid = document.getElementsByClassName("schoolid")[0];
     user = document.getElementsByClassName("user")[0];
     pwd = document.getElementsByClassName("pwd")[0];
+    let sid = Windows.localStorage.getItem("skoleid");
+    if (sid) {
+        schoolid.value = sid;
+    }
 }
 
 function login() {
-    
+    Windows.localStorage.setItem("skoleid", schoolid.value);
     httpPostAsync(init)
 }
